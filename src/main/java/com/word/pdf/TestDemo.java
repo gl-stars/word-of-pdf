@@ -1,6 +1,9 @@
 package com.word.pdf;
 
-import com.aspose.words.*;
+import com.aspose.words.Document;
+import com.aspose.words.ImportFormatMode;
+import com.aspose.words.RevisionOptions;
+import com.aspose.words.ShowInBalloons;
 
 /**
  * @author: stars
@@ -12,7 +15,8 @@ public class TestDemo {
         String inputPath = "C:\\Users\\stars\\Desktop\\powerdesigner使用.doc" ;
         String outPath = "C:\\Users\\stars\\Desktop";
         String fileName = "powerdesigner使用";
-        setShowInBalloons(inputPath,outPath,fileName);
+//        setShowInBalloons(inputPath,outPath,fileName);
+        AppendDocuments();
     }
     /**
      * 将word文档转为PDF文档
@@ -30,5 +34,24 @@ public class TestDemo {
         revisionOptions.setShowInBalloons(ShowInBalloons.FORMAT_AND_DELETE);
         // 输出
         doc.save(outPath + "\\" + fileName+ ".pdf");
+    }
+
+    /**
+     * word文件追加
+     */
+    public static void AppendDocuments(){
+        // 文件路径
+        String dataDir = "C:\\Users\\stars\\Desktop\\" ;
+        // 源文件
+        Document dstDoc = new Document(dataDir + "powerdesigner使用.doc");
+        // 需要追加的文件（将srcDoc文件追加在dstDoc后面）
+        Document srcDoc = new Document(dataDir + "ZS-1000质量手册.docx");
+        // Append the source document to the destination document while keeping the original formatting of the source document.
+        dstDoc.appendDocument(srcDoc, ImportFormatMode.KEEP_SOURCE_FORMATTING);
+        // 追加后的文件
+        dstDoc.save(dataDir + "TestFile Out.docx");
+        //ExEnd:
+
+        System.out.println("Documents appended successfully.");
     }
 }
