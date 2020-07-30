@@ -16,9 +16,11 @@ public class TestDemo {
         String fileName = "powerdesigner使用";
 //        setShowInBalloons(inputPath,outPath,fileName);
 //        AppendDocuments();
-        FindAndReplace("namea","这是标题");
-        FindAndReplace("name","替换后的数据");
+//        FindAndReplace("namea","这是标题");
+//        FindAndReplace("name","替换后的数据");
+        embedCoreFonts();
     }
+
     /**
      * 将word文档转为PDF文档
      *
@@ -77,5 +79,27 @@ public class TestDemo {
         System.out.println("Document text after replace: " + doc.getRange().getText());
         // 替换后的文件
         doc.save(dataDir + "ReplaceSimpleOut.doc");
+    }
+
+    /**
+     * 更改字体
+     * <p>将word文档转为PDF文档，设置字体</p>
+     * @throws Exception
+     */
+    public static void embedCoreFonts() throws Exception {
+        // 文件路径
+        String dataDir = "C:\\Users\\stars\\Desktop\\" ;
+        ///ExStart:embedCoreFonts
+        // Load the document to render.
+        Document doc = new Document(dataDir + "powerdesigner使用.doc");
+
+        // To disable embedding of core fonts and subsuite PDF type 1 fonts set UseCoreFonts to true.
+        PdfSaveOptions options = new PdfSaveOptions();
+        // true 使用核心字体
+        options.setUseCoreFonts(true);
+
+        // The output PDF will not be embedded with core fonts such as Arial, Times New Roman etc.
+        doc.save(dataDir + "Rendering.DisableEmbedWindowsFonts_Out.pdf");
+        //ExEnd:embedCoreFonts
     }
 }
