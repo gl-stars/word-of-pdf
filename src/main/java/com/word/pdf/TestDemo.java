@@ -1,9 +1,8 @@
 package com.word.pdf;
 
-import com.aspose.words.Document;
-import com.aspose.words.ImportFormatMode;
-import com.aspose.words.RevisionOptions;
-import com.aspose.words.ShowInBalloons;
+import com.aspose.words.*;
+
+import java.util.regex.Pattern;
 
 /**
  * @author: stars
@@ -16,7 +15,9 @@ public class TestDemo {
         String outPath = "C:\\Users\\stars\\Desktop";
         String fileName = "powerdesigner使用";
 //        setShowInBalloons(inputPath,outPath,fileName);
-        AppendDocuments();
+//        AppendDocuments();
+        FindAndReplace("namea","这是标题");
+        FindAndReplace("name","替换后的数据");
     }
     /**
      * 将word文档转为PDF文档
@@ -39,7 +40,7 @@ public class TestDemo {
     /**
      * word文件追加
      */
-    public static void AppendDocuments(){
+    public static void AppendDocuments() throws Exception{
         // 文件路径
         String dataDir = "C:\\Users\\stars\\Desktop\\" ;
         // 源文件
@@ -53,5 +54,28 @@ public class TestDemo {
         //ExEnd:
 
         System.out.println("Documents appended successfully.");
+    }
+
+    /**
+     * 查找并替换
+     * @param replaceMark 替换表示符
+     * @param replaceAfter 替换的数据
+     * @throws Exception
+     */
+    public static void FindAndReplace(String replaceMark,String replaceAfter) throws Exception {
+        // 文件路径
+        String dataDir = "C:\\Users\\stars\\Desktop\\" ;
+        // 源文件
+        Document doc = new Document(dataDir + "ZS-1000质量手册.docx");
+        // 检查文档的文本
+        System.out.println("Original document text: " + doc.getRange().getText());
+
+        Pattern regex = Pattern.compile(replaceMark, Pattern.CASE_INSENSITIVE);
+        // Replace the text in the document.
+        doc.getRange().replace(regex, replaceAfter, new FindReplaceOptions());
+        // Check the replacement was made.
+        System.out.println("Document text after replace: " + doc.getRange().getText());
+        // 替换后的文件
+        doc.save(dataDir + "ReplaceSimpleOut.doc");
     }
 }
