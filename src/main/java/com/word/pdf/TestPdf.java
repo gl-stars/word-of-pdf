@@ -1,6 +1,8 @@
 package com.word.pdf;
 
 import com.aspose.pdf.*;
+import com.aspose.pdf.devices.EmfDevice;
+import com.aspose.pdf.devices.Resolution;
 import com.aspose.pdf.text.CustomFontSubstitutionBase;
 
 import java.io.IOException;
@@ -20,7 +22,9 @@ public class TestPdf {
 //        ConvertPDFToSVGFormat();
 //        ConvertSVGFileToPDFFormat();
 //        DefaultFontWhenSpecificFontMissing();
-        EscapeHTMLTagsAndSpecialCharacters();
+//        EscapeHTMLTagsAndSpecialCharacters();
+//        PDFToEMF();
+        addTableInExistingPDFDocument();
     }
 
 
@@ -116,6 +120,7 @@ public class TestPdf {
 
     /**
      * pdf转为HTML
+     * <b>这种方式转换效果不好，推荐使用{@link TestPdf#EscapeHTMLTagsAndSpecialCharacters()}</b>
      * @throws Exception
      */
     public static void DefaultFontWhenSpecificFontMissing() throws Exception {
@@ -161,5 +166,82 @@ public class TestPdf {
         // save resultant file
         pdfDoc.save("C:\\Users\\stars\\Desktop\\output.html", htmlSaveOps);
     }
+
+
+    /**
+     * pdf转为emf文件，只能转换一页
+     */
+    public static void PDFToEMF(){
+        // instantiate EmfDevice object
+        EmfDevice device = new EmfDevice(new Resolution(96));
+        // load existing PDF file
+        Document doc = new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+        // save first page of PDF file as Emf image
+        device.process(doc.getPages().get_Item(1), "C:\\Users\\stars\\Desktop\\output.emf");
+    }
+
+    /**
+     * 在现有的PDF 文档中添加数据
+     * <p>指定页添加表格</p>
+     */
+//    public static void addTableInExistingPDFDocument(){
+//        // Load source PDF document
+//        Document doc =  new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+//        // 初始化表的新实例
+//        Table table = new Table();
+//        // 将表格边框颜色设置为浅灰色
+//        table.setBorder(new BorderInfo(BorderSide.All, .5f, Color.getLightGray()));
+//        // 设置表格单元格的边框
+//        table.setDefaultCellBorder(new BorderInfo(BorderSide.All, .5f, Color.getLightGray()));
+//
+//        // 添加三列十行的数据
+//        for (int row_count = 1; row_count < 10; row_count++) {
+//            // 向表中添加行
+//            Row row = table.getRows().add();
+//            // 添加表格的行数据
+//            row.getCells().add("Column (" + row_count + ", 1)");
+//            row.getCells().add("Column (" + row_count + ", 2)");
+//            row.getCells().add("Column (" + row_count + ", 3)");
+//        }
+//        // 在PDF文档的第二页添加 table 这个表格
+//        doc.getPages().getUnrestricted(2).getParagraphs().add(table);
+//        doc.save( "C:\\Users\\stars\\Desktop\\Annotation_output.pdf");
+//    }
+
+    /**
+     * 在现有的PDF 文档中添加数据
+     * <p>指定页添加表格</p>
+     */
+    public static void addTableInExistingPDFDocument(){
+        // Load source PDF document
+        Document doc =  new Document("C:\\Users\\stars\\Desktop\\cc.pdf");
+        // 初始化表的新实例
+        Table table = new Table();
+        // 将表格边框颜色设置为浅灰色
+        table.setBorder(new BorderInfo(BorderSide.All, .5f, Color.getLightGray()));
+        // 设置表格单元格的边框
+        table.setDefaultCellBorder(new BorderInfo(BorderSide.All, .5f, Color.getLightGray()));
+        // 创建行对象
+        Row row = table.getRows().add();
+        // 这一行中第一列的数据
+        row.getCells().add("编号");
+        // 这一行中第二列的数据
+        row.getCells().add("姓名");
+        // 这一行中第三列的数据
+        row.getCells().add("性别");
+        // 这一行中第四列的数据
+        row.getCells().add("家庭住址");
+        for (int i = 0 ;i<10;i++){
+            Row rowLine = table.getRows().add();
+            rowLine.getCells().add("" + i);
+            rowLine.getCells().add("小花花");
+            rowLine.getCells().add("女");
+            rowLine.getCells().add("这里的家庭地址在怎么不全面");
+        }
+        // 在PDF文档的第二页添加 table 这个表格
+        doc.getPages().getUnrestricted(1).getParagraphs().add(table);
+        doc.save( "C:\\Users\\stars\\Desktop\\Annotation_output.pdf");
+    }
+
 
 }
