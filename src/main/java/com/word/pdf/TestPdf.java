@@ -24,7 +24,10 @@ public class TestPdf {
 //        DefaultFontWhenSpecificFontMissing();
 //        EscapeHTMLTagsAndSpecialCharacters();
 //        PDFToEMF();
-        addTableInExistingPDFDocument();
+//        addTableInExistingPDFDocument();
+//        setAutoFitToWindowPropertyInColumnAdjustmentTypeEnumeration();
+//        ForceTableRenderingOnNewPage();
+        replaceTextOnAllPages("A","C");
     }
 
 
@@ -240,6 +243,126 @@ public class TestPdf {
         }
         // 在PDF文档的第二页添加 table 这个表格
         doc.getPages().getUnrestricted(1).getParagraphs().add(table);
+        doc.save( "C:\\Users\\stars\\Desktop\\Annotation_output.pdf");
+    }
+
+    /**
+     * 创建PDF文档，并添加表格
+     */
+    public static void setAutoFitToWindowPropertyInColumnAdjustmentTypeEnumeration(){
+        //Instantiate the PDF object by calling its empty constructor
+        Document doc = new Document();
+        //Create the section in the PDF object
+        Page page = doc.getPages().add();
+
+        //Instantiate a table object
+        Table tab = new Table();
+        //Add the table in paragraphs collection of the desired section
+        page.getParagraphs().add(tab);
+
+        //Set with column widths of the table
+        tab.setColumnWidths("50 50 50");
+        tab.setColumnAdjustment(ColumnAdjustment.AutoFitToWindow);
+
+        //Set default cell border using BorderInfo object
+        tab.setDefaultCellBorder(new com.aspose.pdf.BorderInfo(com.aspose.pdf.BorderSide.All, 0.1F));
+
+        //Set table border using another customized BorderInfo object
+        tab.setBorder(new com.aspose.pdf.BorderInfo(com.aspose.pdf.BorderSide.All, 1F));
+        //Create MarginInfo object and set its left, bottom, right and top margins
+        com.aspose.pdf.MarginInfo margin = new com.aspose.pdf.MarginInfo();
+        margin.setTop(5f);
+        margin.setLeft(5f);
+        margin.setRight(5f);
+        margin.setBottom(5f);
+
+        //Set the default cell padding to the MarginInfo object
+        tab.setDefaultCellPadding(margin);
+
+        //Create rows in the table and then cells in the rows
+        com.aspose.pdf.Row row1 = tab.getRows().add();
+        row1.getCells().add("col1");
+        row1.getCells().add("col2");
+        row1.getCells().add("col3");
+        com.aspose.pdf.Row row2 = tab.getRows().add();
+        row2.getCells().add("item1");
+        row2.getCells().add("item2");
+        row2.getCells().add("item3");
+
+        //Save the PDF
+        doc.save( "C:\\Users\\stars\\Desktop\\Annotation_output.pdf");
+    }
+
+    /**
+     * 新建PDF添加数据
+     */
+    public static void ForceTableRenderingOnNewPage(){
+        // Added document
+        Document doc = new Document();
+        PageInfo pageInfo = doc.getPageInfo();
+        MarginInfo marginInfo = pageInfo.getMargin();
+        marginInfo.setLeft(37);
+        marginInfo.setRight(37);
+        marginInfo.setTop(37);
+        marginInfo.setBottom(37);
+        pageInfo.setLandscape(true);
+        Table table = new Table();
+        table.setColumnWidths("50 100");
+        // Added page.
+        Page curPage = doc.getPages().add();
+        for (int i = 1; i <= 120; i++) {
+            Row row = table.getRows().add();
+            row.setFixedRowHeight(15);
+            Cell cell1 = row.getCells().add();
+            cell1.getParagraphs().add(new TextFragment("Content 1"));
+            Cell cell2 = row.getCells().add();
+            cell2.getParagraphs().add(new TextFragment("HHHHH"));
+        }
+        Paragraphs paragraphs = curPage.getParagraphs();
+        paragraphs.add(table);
+        /********************************************/
+        Table table1 = new Table();
+        table.setColumnWidths("100 100");
+        for (int i = 1; i <= 10; i++) {
+            Row row = table1.getRows().add();
+            Cell cell1 = row.getCells().add();
+            cell1.getParagraphs().add(new TextFragment("LAAAAAAA"));
+            Cell cell2 = row.getCells().add();
+            cell2.getParagraphs().add(new TextFragment("LAAGGGGGG"));
+        }
+        table1.setInNewPage(true);
+        // I want to keep table 1 to next page please...
+        paragraphs.add(table1);
+        //Save the PDF
+        doc.save( "C:\\Users\\stars\\Desktop\\Annotation_output.pdf");
+    }
+
+    /**
+     * 替换文本
+     * <b>如果一个文字替换一个文字，还行，因为其他格式是不变话的。只能替换前三页</b>
+     * @param BeforeReplacement 替换前
+     * @param AfterReplacement 替换后
+     */
+    public static void replaceTextOnAllPages(String BeforeReplacement,String AfterReplacement){
+        // 需要替换的文本
+        Document doc = new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+        // 需要替换的字符
+        TextFragmentAbsorber textFragmentAbsorber = new TextFragmentAbsorber(BeforeReplacement);
+        // Accept the absorber for first page of document
+        doc.getPages().accept(textFragmentAbsorber);
+        // Get the extracted text fragments into collection
+        TextFragmentCollection textFragmentCollection = textFragmentAbsorber.getTextFragments();
+        // Loop through the fragments
+        for (TextFragment textFragment : (Iterable<TextFragment>) textFragmentCollection) {
+            // Update text and other properties
+            textFragment.setText(AfterReplacement);
+            // 字体大小
+            textFragment.getTextState().setFontSize(10);
+            textFragment.getTextState().setForegroundColor(Color.getBlack());
+            // 背景色，现在是白色
+            textFragment.getTextState().setBackgroundColor(Color.getWhite());
+        }
+        // 替换后的文本
         doc.save( "C:\\Users\\stars\\Desktop\\Annotation_output.pdf");
     }
 
