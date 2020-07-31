@@ -4,6 +4,8 @@ import com.aspose.pdf.*;
 import com.aspose.pdf.text.CustomFontSubstitutionBase;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: stars
@@ -17,7 +19,8 @@ public class TestPdf {
 //        ConvertPDFToPPTX();
 //        ConvertPDFToSVGFormat();
 //        ConvertSVGFileToPDFFormat();
-        DefaultFontWhenSpecificFontMissing();
+//        DefaultFontWhenSpecificFontMissing();
+        EscapeHTMLTagsAndSpecialCharacters();
     }
 
 
@@ -136,6 +139,27 @@ public class TestPdf {
             substitutionFont[0] = FontRepository.findFont("MSGothic");
             return true;
         }
+    }
+
+    /**
+     * pdf转为HTML格式
+     */
+    public static void EscapeHTMLTagsAndSpecialCharacters(){
+        // Load existing PDf file
+        Document pdfDoc = new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+        final Map names = new HashMap();
+        /*pdfDoc.FontSubstitution.add(new Document.FontSubstitutionHandler() {
+            public void invoke(Font font, Font newFont) {
+                // add substituted FontNames into map.
+                names.put(font.getFontName(), newFont.getFontName());
+                // or print the message into console
+                System.out.println("Warning: Font " + font.getFontName() + " was substituted with another font -> " + newFont.getFontName());
+            }
+        });*/
+        // instantiate HTMLSave option to save output in HTML
+        HtmlSaveOptions htmlSaveOps = new HtmlSaveOptions();
+        // save resultant file
+        pdfDoc.save("C:\\Users\\stars\\Desktop\\output.html", htmlSaveOps);
     }
 
 }
