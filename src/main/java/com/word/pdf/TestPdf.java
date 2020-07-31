@@ -13,7 +13,8 @@ public class TestPdf {
 //        GetPageCountWithoutSavingPDF(7);
 //        savingToDoc();
 //        savingToDOCX();
-        ConvertPDFToPPTX();
+//        ConvertPDFToPPTX();
+        ConvertPDFToSVGFormat();
     }
 
 
@@ -70,11 +71,27 @@ public class TestPdf {
      */
     public static void ConvertPDFToPPTX(){
         // Load PDF document
-        Document doc =new Document("C:\\Users\\stars\\Desktop\\t.pdf");
+        Document doc = new Document("C:\\Users\\stars\\Desktop\\t.pdf");
         // Instantiate PptxSaveOptions instance
         PptxSaveOptions pptx_save = new PptxSaveOptions();
         // Save the output in PPTX format
         doc.save("C:\\Users\\stars\\Desktop\\output.pptx", pptx_save);
+    }
+
+    /**
+     * 将pdf转为SVG图片
+     */
+    public static void ConvertPDFToSVGFormat(){
+        // load PDF document
+        Document doc = new Document("C:\\Users\\stars\\Desktop\\t.pdf");
+        // instantiate an object of SvgSaveOptions
+        SvgSaveOptions saveOptions = new SvgSaveOptions();
+        // do not compress SVG image to Zip archive
+        saveOptions.CompressOutputToZipArchive = false;
+        // resultant file name
+        String outFileName ="C:\\Users\\stars\\Desktop\\Output.svg";
+        // save the output in SVG files
+        doc.save(outFileName, saveOptions);
     }
 
 }
