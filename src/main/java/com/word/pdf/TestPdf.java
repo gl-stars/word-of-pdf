@@ -1,7 +1,6 @@
 package com.word.pdf;
 
-import com.aspose.pdf.Document;
-import com.aspose.pdf.Page;
+import com.aspose.pdf.*;
 
 import java.io.IOException;
 
@@ -12,7 +11,11 @@ import java.io.IOException;
 public class TestPdf {
     public static void main(String[] args) {
 //        GetPageCountWithoutSavingPDF(7);
+//        savingToDoc();
+//        savingToDOCX();
+        ConvertPDFToPPTX();
     }
+
 
     /**
      * 获取PDF指定页面
@@ -36,4 +39,42 @@ public class TestPdf {
         // 返回总页数
         return pdfDocument.getPages().size();
     }
+
+    /**
+     * pdf转为doc
+     */
+    public static void savingToDoc(){
+        // 读取pdf文档
+        Document pdfDocument = new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+        // 转换为doc文档
+        pdfDocument.save("C:\\Users\\stars\\Desktop\\TableHeightIssue.doc", SaveFormat.Doc);
+    }
+
+    /**
+     * pdf转为docx
+     */
+    public static void savingToDOCX() {
+        // Load source PDF file
+        Document doc = new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+        // Instantiate Doc SaveOptions instance
+        DocSaveOptions saveOptions = new DocSaveOptions();
+        // Set output file format as DOCX
+        saveOptions.setFormat(DocSaveOptions.DocFormat.DocX);
+        // Save resultant DOCX file
+        doc.save("C:\\Users\\stars\\Desktop\\TableHeightIssue.docx", saveOptions);
+    }
+
+
+    /**
+     * 将PDF转为ppt
+     */
+    public static void ConvertPDFToPPTX(){
+        // Load PDF document
+        Document doc =new Document("C:\\Users\\stars\\Desktop\\t.pdf");
+        // Instantiate PptxSaveOptions instance
+        PptxSaveOptions pptx_save = new PptxSaveOptions();
+        // Save the output in PPTX format
+        doc.save("C:\\Users\\stars\\Desktop\\output.pptx", pptx_save);
+    }
+
 }
