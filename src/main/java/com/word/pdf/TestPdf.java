@@ -14,7 +14,8 @@ public class TestPdf {
 //        savingToDoc();
 //        savingToDOCX();
 //        ConvertPDFToPPTX();
-        ConvertPDFToSVGFormat();
+//        ConvertPDFToSVGFormat();
+        ConvertSVGFileToPDFFormat();
     }
 
 
@@ -92,6 +93,19 @@ public class TestPdf {
         String outFileName ="C:\\Users\\stars\\Desktop\\Output.svg";
         // save the output in SVG files
         doc.save(outFileName, saveOptions);
+    }
+
+    /**
+     * 将SVG转为PDF
+     */
+    public static void ConvertSVGFileToPDFFormat(){
+        String file = "C:\\Users\\stars\\Desktop\\Output.svg";
+        // Instantiate LoadOption object using SVG load option
+        LoadOptions options = new SvgLoadOptions();
+        // Create Document object
+        Document document = new Document(file, options);
+        // Save the resultant PDF document
+        document.save("C:\\Users\\stars\\Desktop\\Result.pdf");
     }
 
 }
