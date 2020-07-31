@@ -11,14 +11,14 @@ import java.util.regex.Pattern;
 public class TestDemo {
 
     public static void main(String[] args) throws Exception {
-        String inputPath = "C:\\Users\\stars\\Desktop\\powerdesigner使用.doc" ;
+        String inputPath = "C:\\Users\\stars\\Desktop\\ZS-1000质量手册.docx" ;
         String outPath = "C:\\Users\\stars\\Desktop";
-        String fileName = "powerdesigner使用";
-//        setShowInBalloons(inputPath,outPath,fileName);
+        String fileName = "ZS-1000质量手册";
+        setShowInBalloons(inputPath,outPath,fileName);
 //        AppendDocuments();
 //        FindAndReplace("namea","这是标题");
 //        FindAndReplace("name","替换后的数据");
-        embedCoreFonts();
+//        embedCoreFonts();
     }
 
     /**
