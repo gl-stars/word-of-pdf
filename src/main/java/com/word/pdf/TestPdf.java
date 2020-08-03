@@ -27,7 +27,8 @@ public class TestPdf {
 //        addTableInExistingPDFDocument();
 //        setAutoFitToWindowPropertyInColumnAdjustmentTypeEnumeration();
 //        ForceTableRenderingOnNewPage();
-        replaceTextOnAllPages("A","C");
+//        replaceTextOnAllPages("A","C");
+        maina();
     }
 
 
@@ -367,4 +368,13 @@ public class TestPdf {
     }
 
 
+    public static void maina() {
+        // Load existing PDf file
+        Document pdfDoc = new Document("C:\\Users\\stars\\Desktop\\abc.pdf");
+        HtmlSaveOptions htmlSaveOps = new HtmlSaveOptions();
+
+
+        // save resultant file
+        pdfDoc.save("C:\\Users\\stars\\Desktop\\output.html", htmlSaveOps);
+    }
 }
