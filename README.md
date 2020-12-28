@@ -1,6 +1,8 @@
 # 各种文件类型转换
 
-项目地址：[https://gitee.com/Jakewabc/word-of-pdf.git](https://gitee.com/Jakewabc/word-of-pdf.git)
+项目地址：[https://github.com/gl-stars/word-of-pdf.git](https://github.com/gl-stars/word-of-pdf.git)
+
+注意：项目我是在国内写的，所以一切资源都是保存在国内。由于`GitHub`网站访问不多国内的原因，所以你可能看到的这个文档照片可能无法显示，你可以参考博客：[https://blog.csdn.net/qq_41853447/article/details/107715704](https://blog.csdn.net/qq_41853447/article/details/107715704)
 
 相关案例：
 
